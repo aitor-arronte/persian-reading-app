@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                <h2 class="portfolio-title">{{ material.title }}</h2>
+              </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+                 <h5>{{ material.rubric|safe }}</h5>
+            </div>
+        </div>
+          <br>
+          <br>
+        <div class="row">
+
+            <div class="col-md-6">
+            {% if material.image %}
+               <img src="{{ material.image }}">
+
+            {% elif material.video %}
+                <video width="360" height="280" controls>
+                    <source src=" /media/{{ material.video }}" type="video/mp4">
+                      Your browser does not support the video tag.
+                </video>
+
+            {% endif %}
+            </div>
+
+          <div class="col-md-6">
+          {% if material.audio %}
+          <audio id="player" src="{{ material.audio }}"></audio>
+          <div class="float-right">
+          <button onclick="document.getElementById('player').play()" type="button" class="btn btn-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+                    <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"></path>
+                </svg>
+          </button>
+          </div>
+          <br>
+          <br>
+          {% endif %}
+          {% if material.use_glossing  %}
+              {% for text in material.get_texts %}
+                  <div class="tooltip">{{ text.text|safe }}
+                        <span class="tooltiptext">{{ text.glos|safe }}</span>
+                  </div>
+              {% endfor %}
+          {% else %}
+              {% for text in material.get_texts %}
+                    {{ text.text|safe }}
+              {% endfor %}
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+          <div class="row">
+              <h5>{{ material.quiz_instructions|safe }}</h5>
+          </div>
+          <br>
+          <div class="row">
+              {% if material.quiz_type == 'M' %}
+
+              <div class="col-md-6">
+
+                <div class="list-group" id="list-option" role="tablist" class="text-right">
+                     {% for word in material.get_options %}
+                            <a class="list-group-item list-group-item-action text-right" id="{{ word}}" data-toggle="list" role="tab" aria-controls="option1" draggable="true" ondragstart="drag(event)" dir="rtl">{{ word.option }}</a>
+
+                     {% endfor %}
+                         </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="list-group" id="list-answer" role="tablist">
+                    {% for result in material.get_results %}
+                        <a class="list-group-item list-group-item-action text-right" id="{{ result}}" data-toggle="list" role="tab" aria-controls="option1" ondrop="drop(event)" ondragover="allowDrop(event)" dir="rtl">{{ result.result }}</a>
+                    {% endfor %}
+                </div>
+              </div>
+              {% else %}
+                  {% for word in material.get_answers %}
+                    <input type="checkbox" value="{{ word }}">
+                  {% endfor %}
+
+                {% endif %}
+          </div>
+          <br>
+          <button type="button" class="btn btn-success" onclick="get_next_url()">Next</button>
+        </div>
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+    $(".fancybox").fancybox({
+        openEffect: "none",
+        closeEffect: "none"
+    });
+});
+
+
+        //Drag and drop//
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  console.log(ev.dataTransfer.getData('text'));
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+//Get next url//
+
+    var id={{ material.id }};
+    var ids = {{ ids|safe }};
+    var index = ids.indexOf(id);
+    var url = '{{ request.get_full_path }}';
+
+    function get_next_url() {
+
+        if (index < ids.length - 1) {
+            nextId = ids[index + 1];
+            var new_url = url.substring(0, url.lastIndexOf('/')) + '/' + nextId;
+            window.location.replace(new_url);
+        }
+        else {
+            var new_url = '/';
+            window.location.replace(new_url);
+
+        }
+    }
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+
+          <h2>Select reading materials by your level of proficiency</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <br>
+
+    <section id="level" class="pricing">
+      <div class="container">
+        <div class="section-title">
+          <h2>Proficiency levels</h2>
+        </div>
+        <div class="row">
+
+          <div class="col-lg-4 col-md-4">
+            <div class="box recommended" data-aos="zoom-in-right" data-aos-delay="200">
+              <h3>Novice</h3>
+
+              <div class="btn-wrap">
+                <a href="/material/N/{{ init.0 }}" class="btn-buy">Start reading</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <div class="box recommended" data-aos="zoom-in-right" data-aos-delay="200">
+              <h3>Intermediate</h3>
+
+              <div class="btn-wrap">
+                <a href="/material/I/{{ init.1 }}" class="btn-buy">Start reading</a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-md-4">
+            <div class="box recommended" data-aos="zoom-in-right" data-aos-delay="200">
+              <h3>Advanced</h3>
+
+              <div class="btn-wrap">
+                <a href="/material/A/{{ init.2 }}" class="btn-buy">Start reading</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Pricing Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}

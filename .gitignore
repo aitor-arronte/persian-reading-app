@@ -1,0 +1,11 @@
+*.pyc
+*.sqlite3
+*.json
+migrations/
+venv/
+media/
+settings.py
+.idea/
+*.mp4
+*.jpg
+*.png

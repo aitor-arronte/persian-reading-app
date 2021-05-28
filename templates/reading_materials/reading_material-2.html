@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+          <div class="row">
+              <h2 class="portfolio-title">Title in English</h2>
+          </div>
+          <br>
+        <div class="row">
+            <div class="col-md-8">
+                <h5> This is the rubric in English of this reading material.</h5>
+            </div>
+        </div>
+          <br>
+          <br>
+        <div class="row">
+
+            <div class="col-md-6">
+
+
+
+                <a class="fancybox" href="/static/img/img1.png" data-fancybox-group="gallery" title=""><img src="/static/img/img1.png" class="img-fluid" alt="" /></a>
+
+            </div>
+
+          <div class="col-md-6" >
+
+            <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"><strong>امانوئل مکرون، رئیس جمهور فرانسه، اعلام کرد که از روز شنبه به مدت چهار هفته در این کشور قرنطینه سراسری اعمال می‌شود.
+</strong></p>
+              <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"> مکرون در پیامی تلویزیونی با اشاره به موج تازه شیوع ویروس کرونا در فرانسه و کشورهای اروپایی گفت که با آغاز دوره تازه قرنطینه، تمام فروشگاه‌ها به جز مواد غذایی و کالاهای اساسی تعطیل می‌شود و هر کس می‌تواند باید از خانه کار کند.تمام مدارس فرانسه هم از دوشنبه آینده به مدت سه هفته تعطیل <A href="https://persian-dictionary-3eb04.firebaseapp.com/details/Q97ap0LjDE1BngNIKrMa" target="_blank" >تعطیل</A> خواهد شد و دانش‌آموزان از خانه در کلاس‌های مجازی شرکت می‌کنند. به گفته آقای مکرون تنها فرزندان کارکنان مشاغل ضروری می‌توانند به مدرسه بروند.
+</p>
+                   <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"><strong>امانوئل مکرون، رئیس جمهور فرانسه، اعلام کرد که از روز شنبه به مدت چهار هفته در این کشور قرنطینه سراسری اعمال می‌شود.
+</strong></p>
+              <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;">آقای مکرون در پیامی تلویزیونی با اشاره به موج تازه شیوع ویروس کرونا در فرانسه و کشورهای اروپایی گفت که با آغاز دوره تازه قرنطینه، تمام فروشگاه‌ها به جز مواد غذایی و کالاهای اساسی تعطیل می‌شود و هر کس می‌تواند باید از خانه کار کند.تمام مدارس فرانسه هم از دوشنبه آینده به مدت سه هفته تعطیل خواهد شد و دانش‌آموزان از خانه در کلاس‌های مجازی شرکت می‌کنند. به گفته آقای مکرون تنها فرزندان کارکنان مشاغل ضروری می‌توانند به مدرسه بروند.
+</p>
+                   <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"><strong>امانوئل مکرون، رئیس جمهور فرانسه، اعلام کرد که از روز شنبه به مدت چهار هفته در این کشور قرنطینه سراسری اعمال می‌شود.
+</strong></p>
+              <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;">آقای مکرون در پیامی تلویزیونی با اشاره به موج تازه شیوع ویروس کرونا در فرانسه و کشورهای اروپایی گفت که با آغاز دوره تازه قرنطینه، تمام فروشگاه‌ها به جز مواد غذایی و کالاهای اساسی تعطیل می‌شود و هر کس می‌تواند باید از خانه کار کند.تمام مدارس فرانسه هم از دوشنبه آینده به مدت سه هفته تعطیل خواهد شد و دانش‌آموزان از خانه در کلاس‌های مجازی شرکت می‌کنند. به گفته آقای مکرون تنها فرزندان کارکنان مشاغل ضروری می‌توانند به مدرسه بروند.
+</p>
+                   <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"><strong>امانوئل مکرون، رئیس جمهور فرانسه، اعلام کرد که از روز شنبه به مدت چهار هفته در این کشور قرنطینه سراسری اعمال می‌شود.
+</strong></p>
+              <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;">آقای مکرون در پیامی تلویزیونی با اشاره به موج تازه شیوع ویروس کرونا در فرانسه و کشورهای اروپایی گفت که با آغاز دوره تازه قرنطینه، تمام فروشگاه‌ها به جز مواد غذایی و کالاهای اساسی تعطیل می‌شود و هر کس می‌تواند باید از خانه کار کند.تمام مدارس فرانسه هم از دوشنبه آینده به مدت سه هفته تعطیل خواهد شد و دانش‌آموزان از خانه در کلاس‌های مجازی شرکت می‌کنند. به گفته آقای مکرون تنها فرزندان کارکنان مشاغل ضروری می‌توانند به مدرسه بروند.
+</p>
+                   <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;"><strong>امانوئل مکرون، رئیس جمهور فرانسه، اعلام کرد که از روز شنبه به مدت چهار هفته در این کشور قرنطینه سراسری اعمال می‌شود.
+</strong></p>
+              <p dir="rtl" class="text-right" style="font-family: 'B Mitra';font-size: 1.5rem;">آقای مکرون در پیامی تلویزیونی با اشاره به موج تازه شیوع ویروس کرونا در فرانسه و کشورهای اروپایی گفت که با آغاز دوره تازه قرنطینه، تمام فروشگاه‌ها به جز مواد غذایی و کالاهای اساسی تعطیل می‌شود و هر کس می‌تواند باید از خانه کار کند.تمام مدارس فرانسه هم از دوشنبه آینده به مدت سه هفته تعطیل خواهد شد و دانش‌آموزان از خانه در کلاس‌های مجازی شرکت می‌کنند. به گفته آقای مکرون تنها فرزندان کارکنان مشاغل ضروری می‌توانند به مدرسه بروند.
+</p>
+          </div>
+
+        </div>
+          </div>
+    </section>
+
+
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+          <div class="row">
+              <h5>Match the words and concepts from both columns</h5>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="list-group" id="list-tab" role="tablist" class="text-right">
+                  <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab" aria-controls="option1" draggable="true" ondragstart="drag(event)" dir="rtl" class="text-right">می‌شود</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"  role="tab" aria-controls="option2" draggable="true" ondragstart="drag(event)" dir="rtl" class="text-right">Option2</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" role="tab" aria-controls="option3" draggable="true" ondragstart="drag(event)">این</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"  role="tab" aria-controls="option4" draggable="true" ondragstart="drag(event)">OPtion4</a>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" role="tab" aria-controls="option1" ondrop="drop(event)" ondragover="allowDrop(event)">Option1</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"  role="tab" aria-controls="option2" ondrop="drop(event)" ondragover="allowDrop(event)">Option2</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" role="tab" aria-controls="option3" ondrop="drop(event)" ondragover="allowDrop(event)">Option3</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"  role="tab" aria-controls="option4" ondrop="drop(event)" ondragover="allowDrop(event)">OPtion4</a>
+                </div>
+              </div>
+
+
+          </div>
+          <br>
+          <a href="/reading2"><button type="button" class="btn btn-success">Next</button></a>
+        </div>
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+    $(".fancybox").fancybox({
+        openEffect: "none",
+        closeEffect: "none"
+    });
+});
+    </script>
+{% endblock %}
