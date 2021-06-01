@@ -11,7 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 		path('material/<str:level>/<int:material_id>', show_material),
 		path('tinymce/[id]',include('tinymce.urls')),
-    path('', TemplateView.as_view(template_name='reading_materials/home.html')),
+    path('', TemplateView.as_view(template_name='reading_materials/home.html'), name='home'),
 		path('proficiency/', proficiency_levels),
 		path('reading/', TemplateView.as_view(template_name='reading_materials/reading_material-2.html')),
 		path('reading2/', TemplateView.as_view(template_name='reading_materials/reading_material.html'))

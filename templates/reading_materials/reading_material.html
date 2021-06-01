@@ -36,7 +36,7 @@
 
             {% elif material.video %}
                 <video width="360" height="280" controls>
-                    <source src=" /media/{{ material.video }}" type="video/mp4">
+                    <source src=" {% url 'home' %}media/{{ material.video }}" type="video/mp4">
                       Your browser does not support the video tag.
                 </video>
 
