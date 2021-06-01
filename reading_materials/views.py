@@ -11,11 +11,11 @@ def show_material(request, level, material_id):
 
 def proficiency_levels(request):
     novice_ids = ReadingMaterial.objects.filter(difficulty='N').values_list('id').order_by('order')
-    novice_ids = [id for id in novice_ids]
+    novice_ids = [id[0] for id in novice_ids]
     inter_ids = ReadingMaterial.objects.filter(difficulty='I').values_list('id').order_by('order')
     inter_ids = [id[0] for id in inter_ids]
     advanced_ids = ReadingMaterial.objects.filter(difficulty='A').values_list('id').order_by('order')
-    advanced_ids = [id for id in advanced_ids]
+    advanced_ids = [id[0] for id in advanced_ids]
     init = []
     if novice_ids:
         init.append(novice_ids[0])
