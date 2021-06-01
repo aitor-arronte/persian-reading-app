@@ -162,7 +162,7 @@ function drop(ev) {
             window.location.replace(new_url);
         }
         else {
-            var new_url = '/';
+            var new_url = "{% url 'home' %}";
             window.location.replace(new_url);
 
         }
