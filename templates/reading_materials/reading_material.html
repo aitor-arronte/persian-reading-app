@@ -104,11 +104,18 @@
                 </div>
               </div>
               {% else %}
-                  {% for word in material.get_answers %}
-                    <input type="checkbox" value="{{ word }}">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  {% for word in material.get_options %}
+                      <label class="btn btn-outline-primary">
+
+                    <input type="radio" id="{{ word.option }}">{{ word.option }}
+                      </label>
+                      <br>
                   {% endfor %}
+                  </div>
 
                 {% endif %}
+
           </div>
           <br>
           <button type="button" class="btn btn-success" onclick="get_next_url()">Next</button>
