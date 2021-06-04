@@ -32,7 +32,8 @@
 
             <div class="col-md-6">
             {% if material.image %}
-               <img src="{% url 'home' %}media/{{ material.image }}">
+                <a class="fancybox" href="{% url 'home' %}media/{{ material.image }}" data-fancybox-group="gallery" title=""><img src="{% url 'home' %}media/{{ material.image }}" class="img-fluid" alt="" /></a>
+
 
             {% elif material.video %}
                 <video width="360" height="280" controls>
