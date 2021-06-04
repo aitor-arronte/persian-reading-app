@@ -32,7 +32,7 @@
 
             <div class="col-md-6">
             {% if material.image %}
-               <img src="{{ material.image }}">
+               <img src="{% url 'home' %}media/{{ material.image }}">
 
             {% elif material.video %}
                 <video width="360" height="280" controls>
@@ -45,7 +45,7 @@
 
           <div class="col-md-6">
           {% if material.audio %}
-          <audio id="player" src="{{ material.audio }}"></audio>
+          <audio id="player" src="{% url 'home' %}media/{{ material.audio }}"></audio>
           <div class="float-right">
           <button onclick="document.getElementById('player').play()" type="button" class="btn btn-success">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
