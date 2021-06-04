@@ -96,8 +96,8 @@ class Answer(models.Model):
 				return self.material.title+" "+self.option
 
 		class Meta:
-				verbose_name = ("Quiz")
-				verbose_name_plural = ("Quizzes")
+				verbose_name = ("Quiz options")
+				verbose_name_plural = ("Quiz options")
 
 
 
