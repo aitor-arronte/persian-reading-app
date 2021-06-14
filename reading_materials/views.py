@@ -6,7 +6,7 @@ def show_material(request, level, material_id):
     reading_material = ReadingMaterial.objects.get(id=material_id, difficulty=level)
     ids = ReadingMaterial.objects.filter(difficulty=level).values_list('id').order_by('order')
     ids = [id[0] for id in ids]
-    return render(request, 'reading_materials/reading_material.html', {'material': reading_material, 'ids': ids})
+    return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids})
 
 
 def proficiency_levels(request):

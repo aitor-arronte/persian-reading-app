@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+          <br>
+          <br>
+
+          <div class="row">
+              <div class="col-md-12">
+                <h2 class="portfolio-title">{{ material.title|safe }}</h2>
+              </div>
+          </div>
+          <br>
+          <br>
+
+      <div class="row">
+  <div class="col-md-6 offset-md-3">
+      <div class="col align-items-center">
+
+          <div class="card"  >
+{% if material.image %}
+  <img
+    src="{% url 'home' %}media/{{ material.image }}"
+    class="card-img-top"
+
+  />
+{% endif %}
+
+<div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs" id="options" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#instructions" role="tab" aria-controls="description" aria-selected="true">Instructions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  href="#reading" role="tab" aria-controls="reading" aria-selected="false">Reading</a>
+            </li>
+              {% if material.video %}
+            <li class="nav-item">
+              <a class="nav-link" href="#video" role="tab" aria-controls="deals" aria-selected="false">Video</a>
+            </li>
+              {% endif %}
+          </ul>
+        </div>
+
+  <div class="card-body">
+      <div class="tab-content mt-3">
+          <div class="tab-pane active" id="instructions" role="tabpanel">
+
+      {{ material.instructions|safe }}
+              {% if material.pdf %}
+                              <a href="{% url 'home' %}media/{{ material.pdf }}" target="_blank" class="card-link text-info-ri ">PDF</a>
+
+              {% endif %}
+
+</div>
+          <div class="tab-pane " id="reading" role="tabpanel">
+              {% if material.audio %}
+          <audio id="player" src="{% url 'home' %}media/{{ material.audio }}"></audio>
+          <div class="float-right">
+          <button onclick="document.getElementById('player').play()" type="button" class="btn btn-info">
+               <span class="material-icons">volume_up</span>
+          </button>
+          </div>
+          <br>
+          <br>
+          {% endif %}
+
+              {{ material.text }}
+            </div>
+
+          <div class="tab-pane " id="video" role="tabpanel">
+              <div class="embed-responsive embed-responsive-16by9">
+              <video  controls>
+                    <source src=" {% url 'home' %}media/{{ material.video }}" type="video/mp4">
+                      Your browser does not support the video tag.
+                </video>
+                  </div>
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      {%  for quiz in material.quizzes.all %}
+          <fieldset>
+                {{ quiz.question }}
+          <input type="radio" name="choice">
+          <label></label>
+          </fieldset>
+      {% endfor %}
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+
+
+        $('#options a').on('click', function (e) {
+
+  $(this).tab('show')
+})
+
+
+    </script>
+{% endblock %}
