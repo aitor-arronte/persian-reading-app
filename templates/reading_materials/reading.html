@@ -31,11 +31,9 @@
 
           <div class="card"  >
 {% if material.image %}
-  <img
+  <a class="fancybox" href="{% url 'home' %}media/{{ material.image }}" data-fancybox-group="gallery" title=""><img
     src="{% url 'home' %}media/{{ material.image }}"
-    class="card-img-top"
-
-  />
+    class="card-img-top"/></a>
 {% endif %}
 
 <div class="card-header">
@@ -128,6 +126,14 @@
 {% block js %}
 
     <script type="text/javascript">
+
+          $(document).ready(function(){
+    $(".fancybox").fancybox({
+        openEffect: "none",
+        closeEffect: "none"
+    });
+});
+
 
 
         $('#options a').on('click', function (e) {
