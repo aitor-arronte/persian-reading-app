@@ -60,7 +60,7 @@
 
       {{ material.instructions|safe }}
               {% if material.pdf %}
-                              <a href="{% url 'home' %}media/{{ material.pdf }}" target="_blank" class="card-link text-info-ri ">PDF</a>
+                              <a href="{% url 'home' %}media/{{ material.pdf }}" target="_blank" class="card-link text-info-ri text-right">PDF</a>
 
               {% endif %}
 
@@ -78,6 +78,27 @@
           {% endif %}
 
               {{ material.text }}
+          <hr>
+          <br>
+          <br>
+          {%  for quiz in material.quizzes.all %}
+          {% for question in quiz.get_questions %}
+              <div class="card-header">
+          <h5>{{ question.content|safe }}</h5>
+              </div>
+              <div class="card-body">
+              {% for answer in question.get_answers %}
+          <fieldset class="text-right">
+
+          <input type="radio" name="choice">
+          <label>{{ answer|safe }}</label>
+
+          </fieldset>
+                  {% endfor %}
+              </div>
+              {% endfor %}
+      {% endfor %}
+
             </div>
 
           <div class="tab-pane " id="video" role="tabpanel">
@@ -96,33 +117,6 @@
       </div>
         <br>
         <br>
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="col align-items-center">
-
-         <div class="card" >
-
-      {%  for quiz in material.quizzes.all %}
-          {% for question in quiz.get_questions %}
-              <div class="card-header">
-          <h5>{{ question.content|safe }}</h5>
-              </div>
-              <div class="card-body">
-              {% for answer in question.get_answers %}
-          <fieldset class="text-right">
-
-          <input type="radio" name="choice">
-          <label>{{ answer|safe }}</label>
-
-          </fieldset>
-                  {% endfor %}
-              </div>
-              {% endfor %}
-      {% endfor %}
-         </div>
-        </div>
-      </div>
-      </div>
       <button type="button" class="btn btn-success btn-lg " onclick="get_next_url()">Next</button>
       </div>
     </section><!-- End Portfolio Details Section -->
