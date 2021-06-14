@@ -94,13 +94,36 @@
             </div>
         </div>
       </div>
+        <br>
+        <br>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="col align-items-center">
+
+         <div class="card" >
+
       {%  for quiz in material.quizzes.all %}
-          <fieldset>
-                {{ quiz.question }}
+          {% for question in quiz.get_questions %}
+              <div class="card-header">
+          <h5>{{ question.content|safe }}</h5>
+              </div>
+              <div class="card-body">
+              {% for answer in question.get_answers %}
+          <fieldset class="text-right">
+
           <input type="radio" name="choice">
-          <label></label>
+          <label>{{ answer|safe }}</label>
+
           </fieldset>
+                  {% endfor %}
+              </div>
+              {% endfor %}
       {% endfor %}
+         </div>
+        </div>
+      </div>
+      </div>
+      <button type="button" class="btn btn-success btn-lg " onclick="get_next_url()">Next</button>
       </div>
     </section><!-- End Portfolio Details Section -->
 
@@ -117,6 +140,27 @@
 
   $(this).tab('show')
 })
+
+    //Get next url//
+
+    var id={{ material.id }};
+    var ids = {{ ids|safe }};
+    var index = ids.indexOf(id);
+    var url = '{{ request.get_full_path }}';
+
+    function get_next_url() {
+
+        if (index < ids.length - 1) {
+            nextId = ids[index + 1];
+            var new_url = url.substring(0, url.lastIndexOf('/')) + '/' + nextId;
+            window.location.replace(new_url);
+        }
+        else {
+            var new_url = "{% url 'home' %}";
+            window.location.replace(new_url);
+
+        }
+    }
 
 
     </script>
