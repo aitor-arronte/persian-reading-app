@@ -57,10 +57,6 @@
           <div class="tab-pane active" id="instructions" role="tabpanel">
 
       {{ material.instructions|safe }}
-              {% if material.pdf %}
-                              <a href="{% url 'home' %}media/{{ material.pdf }}" target="_blank" class="card-link text-info-ri text-right">PDF</a>
-
-              {% endif %}
 
 </div>
           <div class="tab-pane " id="reading" role="tabpanel">
@@ -76,6 +72,14 @@
           {% endif %}
 
               {{ material.text|safe }}
+
+           {% if material.pdf %}
+              <br>
+          <div class="text-right">
+                              <a href="{% url 'home' %}media/{{ material.pdf }}" target="_blank" class="btn btn-primary btn-sm" >PDF</a>
+          </div>
+              {% endif %}
+
           <hr>
           <br>
           <br>
