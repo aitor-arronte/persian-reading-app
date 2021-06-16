@@ -11,7 +11,7 @@ class ReadingAdmin(admin.ModelAdmin):
         exclude = []
     list_display = ('title', )
     list_filter = ('title',)
-    fields = ('title', 'instructions', 'text','audio', 'difficulty', 'video', 'image', 'quizzes')
+    fields = ('title', 'instructions', 'text','audio', 'difficulty', 'video', 'image', 'pdf', 'quizzes')
 
     formfield_overrides = {
 
