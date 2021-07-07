@@ -92,9 +92,9 @@
               {% for answer in question.get_answers %}
           <fieldset class="text-right">
 
-          <input type="radio" name="choice">
-          <label>{{ answer|safe }}</label>
 
+          <label>{{ answer|safe }}</label>
+            <input type="radio" name="choice">
           </fieldset>
                   {% endfor %}
               </div>
