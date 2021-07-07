@@ -44,7 +44,7 @@ class Question(models.Model):
             return False
 
     def get_answers(self):
-        return Answer.objects.filter (question=self)
+        return Answer.objects.filter(question=self)
 
     def get_answers_list(self):
         return [(answer.id, answer.content) for answer in

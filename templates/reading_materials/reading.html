@@ -37,16 +37,16 @@
 {% endif %}
 
 <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs" id="options" role="tablist">
+          <ul class="nav nav-tabs card-header-tabs" id="options">
             <li class="nav-item">
-              <a class="nav-link active" href="#instructions" role="tab" aria-controls="description" aria-selected="true">Instructions</a>
+              <a class="nav-link active" href="#instructions" aria-controls="description" aria-selected="true">Instructions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"  href="#reading" role="tab" aria-controls="reading" aria-selected="false">Reading</a>
+              <a class="nav-link"  href="#reading" aria-controls="reading" aria-selected="false">Reading</a>
             </li>
               {% if material.video %}
             <li class="nav-item">
-              <a class="nav-link" href="#video" role="tab" aria-controls="deals" aria-selected="false">Video</a>
+              <a class="nav-link" href="#video"  aria-controls="deals" aria-selected="false">Video</a>
             </li>
               {% endif %}
           </ul>
@@ -54,12 +54,12 @@
 
   <div class="card-body">
       <div class="tab-content">
-          <div class="tab-pane active" id="instructions" role="tabpanel">
+          <div class="tab-pane active" id="instructions">
 
       {{ material.instructions|safe }}
 
 </div>
-          <div class="tab-pane " id="reading" role="tabpanel">
+          <div class="tab-pane " id="reading" >
               {% if material.audio %}
           <audio id="player" src="{% url 'home' %}media/{{ material.audio }}"></audio>
           <div class="float-right">
@@ -103,7 +103,7 @@
 
             </div>
 
-          <div class="tab-pane " id="video" role="tabpanel">
+          <div class="tab-pane " id="video" >
               <div class="embed-responsive embed-responsive-16by9">
               <video  controls>
                     <source src=" {% url 'home' %}media/{{ material.video }}" type="video/mp4">
