@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils import timezone
+from django.utils.html import strip_tags
 
 
 class Quiz (models.Model):
@@ -62,7 +63,7 @@ class Question(models.Model):
         verbose_name_plural = _("Questions")
 
     def __str__(self):
-        return self.content
+        return strip_tags(self.content)
 
 
 
@@ -82,7 +83,7 @@ class Answer(models.Model):
                                   verbose_name=_("Correct"))
 
     def __str__(self):
-        return self.content
+        return strip_tags(self.content)
 
     class Meta:
         verbose_name = _("Answer")
