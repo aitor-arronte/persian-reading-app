@@ -19,7 +19,7 @@ class Quiz (models.Model):
         verbose_name_plural = _ ("Quizzes")
 
     def __str__(self):
-        return self.name
+        return strip_tags(self.name)
 
 
 class Question(models.Model):
@@ -33,6 +33,13 @@ class Question(models.Model):
                                help_text=_("Enter the question text that "
                                            "you want to be displayed"),
                                verbose_name=_('Question'))
+
+    class Meta:
+        verbose_name = _("Question")
+        verbose_name_plural = _("Questions")
+
+    def __str__(self):
+      return "Question: " + strip_tags(self.content)
 
 
 
@@ -54,16 +61,8 @@ class Question(models.Model):
     def answer_choice_to_string(self, guess):
         return Answer.objects.get(id=guess).content
 
-    class Meta:
-        verbose_name = _("Multiple Choice Question")
-        verbose_name_plural = _("Multiple Choice Questions")
 
-    class Meta:
-        verbose_name = _("Question")
-        verbose_name_plural = _("Questions")
 
-    def __str__(self):
-        return strip_tags(self.content)
 
 
 
@@ -82,12 +81,13 @@ class Answer(models.Model):
                                   help_text=_("Is this a correct answer?"),
                                   verbose_name=_("Correct"))
 
-    def __str__(self):
-        return strip_tags(self.content)
-
     class Meta:
         verbose_name = _("Answer")
         verbose_name_plural = _("Answers")
+
+    def __str__(self):
+
+      return strip_tags(self.content)
 
 
 class Responses(models.Model):

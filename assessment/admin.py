@@ -49,7 +49,6 @@ class QuizAdminForm(forms.ModelForm):
 
 
 class MCQuestionAdmin(admin.ModelAdmin):
-    list_display = ('content', )
     list_filter = ('content',)
     fields = ('content', 'quiz', )
 
