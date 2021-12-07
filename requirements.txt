@@ -1,4 +1,4 @@
-asgiref==3.3.1
+asgiref==3.3.4
 Django==3.2.3
 django-grappelli==2.14.3
 django-tinymce4-lite==1.8.0
@@ -6,3 +6,4 @@ jsmin==2.2.2
 Pillow==8.1.2
 pytz==2021.1
 sqlparse==0.4.1
+typing-extensions==3.10.0.0
