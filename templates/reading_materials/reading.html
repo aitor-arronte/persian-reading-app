@@ -89,12 +89,12 @@
           <h5>{{ question.content|safe }}</h5>
               </div>
               <div class="card-body">
+
               {% for answer in question.get_answers %}
-          <fieldset class="text-right">
 
-
+        <fieldset class="text-right" id="{{ question.id }}">
           <label>{{ answer|safe }}</label>
-            <input type="radio" name="choice">
+            <input type="radio" name="{{ question.id }}">
           </fieldset>
                   {% endfor %}
               </div>
