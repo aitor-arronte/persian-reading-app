@@ -63,9 +63,6 @@ class Question(models.Model):
 
 
 
-
-
-
 class Answer(models.Model):
 
     question = models.ForeignKey(Question, verbose_name=_("Question"), on_delete=models.CASCADE)
