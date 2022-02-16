@@ -84,7 +84,7 @@
           <br>
           <div class="row">
               {% if material.quiz_type == 'M' %}
-
+                    {{ material }}
               <div class="col-md-6">
 
                 <div class="list-group" id="list-option" role="tablist" class="text-right">
@@ -106,8 +106,8 @@
               {% else %}
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   {% for word in material.get_options %}
-                      <label class="btn btn-outline-primary" dir="rtl">
 
+                      <label class="btn btn-outline-primary" dir="rtl">
                     <input type="radio" id="{{ word.option }}">{{ word.option }}
                       </label>
                       <br>

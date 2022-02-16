@@ -7,6 +7,12 @@ from django.utils import timezone
 from django.utils.html import strip_tags
 
 
+languages =(
+	('E', 'English'),
+	('P', 'Persian')
+)
+
+
 class Quiz (models.Model):
     name = models.CharField(max_length=150, blank=False)
 
@@ -33,6 +39,7 @@ class Question(models.Model):
                                help_text=_("Enter the question text that "
                                            "you want to be displayed"),
                                verbose_name=_('Question'))
+    language = models.CharField(max_length=1, choices=languages, blank=False, default='P')
 
     class Meta:
         verbose_name = _("Question")

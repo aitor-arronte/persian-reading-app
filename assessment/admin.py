@@ -50,7 +50,7 @@ class QuizAdminForm(forms.ModelForm):
 
 class MCQuestionAdmin(admin.ModelAdmin):
     list_filter = ('content',)
-    fields = ('content', 'quiz', )
+    fields = ('content', 'quiz', 'language')
 
     search_fields = ('content', )
     filter_horizontal = ('quiz',)
