@@ -2,6 +2,7 @@ from .models import *
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def save_quiz_response(request, choice_id, sequence_id):
     if request.is_ajax() and request.method=='POST':

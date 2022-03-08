@@ -89,8 +89,20 @@ class Answer(models.Model):
         verbose_name = _("Answer")
         verbose_name_plural = _("Answers")
 
-    def __str__(self):
 
+    def get_responses(self):
+        users = User.objects.exclude(id__in=(1, 2, 3))
+        responses = Responses.objects.filter(answer=self, user__in=users)
+        return responses
+
+    def get_user_responses(self, users):
+        responses = Responses.objects.filter(answer=self, user__in=users)
+        return responses
+
+    def __str__(self):
+        return self.content
+
+    def __str__(self):
       return strip_tags(self.content)
 
 

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+    <hr>
+{% endif %}
+
+          <h2>Input your username and password</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <br>
+
+    <section id="level" class="pricing">
+      <div class="container">
+        <div class="section-title">
+          <h3>Log in</h3>
+        </div>
+        <div class="row">
+
+          <div class="col-lg-10 col-md-10">
+            <form method="post" action="" class="col s12">
+                            {% csrf_token %}
+                            <div class="row">
+                                    <div class="input-field col s6">
+                                        <p>{{ form.username.label_tag }}</p>
+                                        <p>{{ form.username }}</p>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                   <p> {{ form.password.label_tag }}</p>
+                                    <p>{{ form.password }}</p>
+                                </div>
+                            </div>
+                            <button class="btn-success" type="submit" name="action">Sign in
+                            </button>
+
+
+                            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Pricing Section -->
+
+  </main><!-- End #main -->
+
+{% endblock %}

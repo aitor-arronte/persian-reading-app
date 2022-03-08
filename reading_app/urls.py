@@ -7,6 +7,7 @@ from reading_app import settings
 from reading_materials.views import *
 
 urlpatterns = [
+		path('accounts/', include(('django.contrib.auth.urls','django.contrib.auth'), namespace='auth'), name="signin"),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
 		path('material/<str:level>/<int:material_id>', show_material),
@@ -14,7 +15,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='reading_materials/home.html'), name='home'),
 		path('proficiency/', proficiency_levels),
 		path('reading/', TemplateView.as_view(template_name='reading_materials/reading_material-2.html')),
-		path('reading2/', TemplateView.as_view(template_name='reading_materials/reading_material.html'))
+		path('profile/', get_profile)
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
