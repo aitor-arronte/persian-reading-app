@@ -27,9 +27,9 @@
 
       <div class="row">
   <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-      <div class="col align-items-center">
+      <div class="col align-items-center" id="main_content">
 
-          <div class="card"  >
+          <div class="card"  id="reading_content">
 {% if material.image %}
   <a class="fancybox" href="{% url 'home' %}media/{{ material.image }}" data-fancybox-group="gallery" title=""><img
     src="{% url 'home' %}media/{{ material.image }}"
@@ -97,7 +97,7 @@
             <fieldset class="text-left" id="{{ question.id }}">
     {% endif %}
           <label>{{ answer|safe }}</label>
-            <input type="radio" name="{{ question.id }}">
+            <input type="radio" name="answer" id="{{ answer.id }}">
           </fieldset>
                   {% endfor %}
               </div>
@@ -122,7 +122,7 @@
       </div>
         <br>
         <br>
-      <button type="button" class="btn btn-success btn-lg " onclick="get_next_url()">Next</button>
+      <button type="button" class="btn btn-success btn-lg" id="next" onclick="get_next_url()">Next</button>
       </div>
     </section><!-- End Portfolio Details Section -->
 
@@ -134,6 +134,8 @@
 
     <script type="text/javascript">
 
+    var csrfToken = '{{ csrf_token }}';
+
           $(document).ready(function(){
     $(".fancybox").fancybox({
         openEffect: "none",
@@ -141,11 +143,43 @@
     });
 });
 
+function save_responses(){
+var responses = [];
+$('input[type=radio]:checked').each(function () {
+    responses.push($(this).attr('id'));
+})
+    alert(responses);
+     $.ajax({
+            type: 'POST',
+            url: "{% url 'save_responses' %}",
+            beforeSend: function (xhr) {
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+        },
+            data: {'responses': responses },
+            success: function (response) {
 
+                for (let i = 0; i < response.length; i++) {
 
-        $('#options a').on('click', function (e) {
+                    if (response[i][0] == 1) {
+                            $('#reading_content').prepend(
+                                '<p>Question:'+response[i][0]+' (Correct)</p>'
+                            )}
+                    else if (response[i][0] == 0){
+                            $('#reading_content').prepend(
+                                '<p>Question:'+response[i][0]+' (Incorrect)</p>'
+                            )}
+                    }
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+};
 
-  $(this).tab('show')
+$('#options a').on('click', function (e) {
+
+  $(this).tab('show');
 })
 
     //Get next url//
@@ -157,6 +191,8 @@
 
 
     function get_next_url() {
+
+        save_responses();
 
         if (index < ids.length - 1) {
             nextId = ids[index + 1];

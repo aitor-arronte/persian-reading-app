@@ -71,3 +71,4 @@ class QuizAdmin(admin.ModelAdmin):
 
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Question, MCQuestionAdmin)
+admin.site.register(Responses)

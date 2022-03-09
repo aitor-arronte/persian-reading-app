@@ -23,3 +23,4 @@ class ReadingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ReadingMaterial, ReadingAdmin)
+admin.site.register(Profile)

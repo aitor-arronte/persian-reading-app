@@ -44,16 +44,20 @@ def proficiency_levels(request):
 
 
 @login_required
-def save_response(request, answer_id, response):
+def save_responses(request):
     if request.is_ajax() and request.method=='POST':
-        answer = Answer.objects.get(pk=answer_id)
-        response = Responses.objects.create(answer=answer, response= response, user=request.user)
-        feedback={}
-        if response.answer.correct == True:
-            feedback['response'] = 1
-            feedback['answer'] = answer_id
-        else:
-            feedback['response'] = 0
-            feedback['answer'] = answer_id
+        answers =  request.POST.getlist("responses[]", None)
+        print(answers)
+        feedback = {}
+        for ans in answers:
+            answer = Answer.objects.get(pk=ans)
+            response = Responses.objects.create(answer=answer, user=request.user)
+            if response.answer.correct == True:
+                feedback['response'] = 1
+                feedback['question'] = answer.question.content
+            else:
+                feedback['response'] = 0
+                feedback['answer'] = answer.question.content
+        print(feedback)
         return JsonResponse(feedback, content_type='application/json')
 
