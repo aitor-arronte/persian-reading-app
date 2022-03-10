@@ -116,3 +116,5 @@ class Responses(models.Model):
 
 class Attempt(models.Model):
   responses= models.ManyToManyField(Responses)
+  created = models.DateTimeField(default=timezone.now)
+  closed = models.BooleanField(default=False)

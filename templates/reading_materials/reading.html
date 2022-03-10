@@ -93,12 +93,16 @@
               {% for answer in question.get_answers %}
     {% if question.language == 'P' %}
         <fieldset class="text-right" id="{{ question.id }}">
-    {% else %}
-            <fieldset class="text-left" id="{{ question.id }}">
-    {% endif %}
-          <label>{{ answer|safe }}</label>
+        <label>{{ answer|safe }}</label>
             <input type="radio" name="answer" id="{{ answer.id }}">
           </fieldset>
+    {% else %}
+            <fieldset class="text-left" id="{{ question.id }}">
+            <input type="radio" name="answer" id="{{ answer.id }}">
+        <label>{{ answer|safe }}</label>
+          </fieldset>
+    {% endif %}
+
                   {% endfor %}
               </div>
               {% endfor %}
@@ -148,7 +152,7 @@ var responses = [];
 $('input[type=radio]:checked').each(function () {
     responses.push($(this).attr('id'));
 })
-    alert(responses);
+    alert("Response saved.");
      $.ajax({
             type: 'POST',
             url: "{% url 'save_responses' %}",
