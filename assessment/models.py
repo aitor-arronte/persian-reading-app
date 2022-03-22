@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from django.utils import timezone
+import datetime
 from django.utils.html import strip_tags
 
 
@@ -107,14 +107,14 @@ class Answer(models.Model):
 
 
 class Responses(models.Model):
-    answer = models.ForeignKey('Answer', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField (default=timezone.now)
+  answer = models.ForeignKey('Answer', on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  created = models.DateTimeField(default=datetime.datetime.now())
 
-    def __str__(self):
-      return self.user.username+' response'
+  def __str__(self):
+    return self.user.username+' response'
 
 class Attempt(models.Model):
   responses= models.ManyToManyField(Responses)
-  created = models.DateTimeField(default=timezone.now)
+  created = models.DateTimeField(default=datetime.datetime.now())
   closed = models.BooleanField(default=False)

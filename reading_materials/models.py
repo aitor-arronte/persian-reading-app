@@ -4,7 +4,7 @@ from assessment.models import Quiz
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+import datetime
 
 difficulty_options =(
 	('N', 'Novice'),
@@ -52,3 +52,9 @@ class ReadingMaterial(models.Model):
 
 	def __str__(self):
 		return str(self.title)
+
+
+class Progress(models.Model):
+  user_progress = models.ManyToManyField(User)
+  passed_materials = models.ManyToManyField(ReadingMaterial)
+  created = models.DateTimeField(default=datetime.datetime.now())
