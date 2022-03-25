@@ -36,7 +36,7 @@
     class="card-img-top"/></a>
 {% endif %}
 
-<div class="card-header">
+<div class="card-header" id="card-content">
           <ul class="nav nav-tabs card-header-tabs" id="options">
             <li class="nav-item">
               <a class="nav-link active" href="#instructions" aria-controls="description" aria-selected="true">Instructions</a>
@@ -83,6 +83,8 @@
           <hr>
           <br>
           <br>
+          <form method="post" id="reading-material-form">
+          {% csrf_token %}
           {%  for quiz in material.quizzes.all %}
           {% for question in quiz.get_questions %}
               <div class="card-header">
@@ -94,11 +96,11 @@
     {% if question.language == 'P' %}
         <fieldset class="text-right" id="{{ question.id }}">
         <label>{{ answer|safe }}</label>
-            <input type="radio" name="answer" id="{{ answer.id }}">
+            <input type="radio" name="{{ question.id }}" id="{{ answer.id }}" required>
           </fieldset>
     {% else %}
             <fieldset class="text-left" id="{{ question.id }}">
-            <input type="radio" name="answer" id="{{ answer.id }}">
+            <input type="radio" name="{{ question.id }}" id="{{ answer.id }}" required>
         <label>{{ answer|safe }}</label>
           </fieldset>
     {% endif %}
@@ -107,7 +109,8 @@
               </div>
               {% endfor %}
       {% endfor %}
-
+          <input type="submit" value="Check responses">
+</form>
             </div>
 
           <div class="tab-pane " id="video" >
@@ -126,7 +129,7 @@
       </div>
         <br>
         <br>
-      <button type="button" class="btn btn-success btn-lg" id="next" onclick="get_next_url()">Next</button>
+      <button type="button" class="btn btn-success btn-lg" id="next" onclick="get_next_url()">Next Material</button>
       </div>
     </section><!-- End Portfolio Details Section -->
 
@@ -137,7 +140,7 @@
 {% block js %}
 
     <script type="text/javascript">
-
+    $('#next').hide();
     var csrfToken = '{{ csrf_token }}';
 
           $(document).ready(function(){
@@ -147,21 +150,33 @@
     });
 });
 
+//Handling form submission
+$('#reading-material-form').on('submit', function(event){
+    event.preventDefault();
+    save_responses($('#reading-material-form').val());
+});
+
+
+
+
+          //Function that saves the form submission
 function save_responses(){
 var responses = [];
 $('input[type=radio]:checked').each(function () {
     responses.push($(this).attr('id'));
 })
-    alert("Response saved.");
+    $('#reading-material-form input').attr('readonly', 'readonly');
      $.ajax({
             type: 'POST',
             url: "{% url 'save_responses' %}",
             beforeSend: function (xhr) {
         xhr.setRequestHeader('X-CSRFToken', csrfToken);
         },
-            data: {'responses': responses },
+            data: {'responses': responses, 'material_id': {{ material.id }} },
             success: function (response) {
-
+            $('#card-content').hide();
+            $('#next').show(500);
+            console.log(response);
                 for (let i = 0; i < response.length; i++) {
 
                     if (response[i][0] == 1) {
@@ -175,6 +190,7 @@ $('input[type=radio]:checked').each(function () {
                     }
             },
             error: function (response) {
+             $('#next').show(500);
                 // alert the error if any error occured
                 alert(response["responseJSON"]["error"]);
             }
@@ -196,8 +212,6 @@ $('#options a').on('click', function (e) {
 
     function get_next_url() {
 
-        save_responses();
-
         if (index < ids.length - 1) {
             nextId = ids[index + 1];
             var new_url = url.substring(0, url.lastIndexOf('/')) + '/' + nextId;
@@ -209,7 +223,6 @@ $('#options a').on('click', function (e) {
 
         }
     }
-
 
     </script>
 {% endblock %}

@@ -29,8 +29,11 @@
               <h3>Novice</h3>
 
               <div class="btn-wrap">
-
+                {% if init.0 == 0 %}
+                  <p class="btn-success">You have completed this level.</p>
+                  {% else %}
                 <a href="{% url 'home' %}material/N/{{ init.0 }}" class="btn-buy">Start reading</a>
+                  {% endif %}
               </div>
             </div>
           </div>
@@ -40,7 +43,11 @@
               <h3>Intermediate</h3>
 
               <div class="btn-wrap">
+                  {% if init.1 == 0 %}
+                  <p class="btn-success">You have completed this level.</p>
+                  {% else %}
                 <a href="{% url 'home' %}material/I/{{ init.1 }}" class="btn-buy">Start reading</a>
+                  {% endif %}
               </div>
             </div>
           </div>
@@ -51,7 +58,11 @@
               <h3>Advanced</h3>
 
               <div class="btn-wrap">
+                  {% if init.2 == 0 %}
+                  <p class="btn-success">You have completed this level.</p>
+                  {% else %}
                 <a href="{% url 'home' %}material/A/{{ init.2 }}" class="btn-buy">Start reading</a>
+                  {% endif %}
               </div>
             </div>
           </div>

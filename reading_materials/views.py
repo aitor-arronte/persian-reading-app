@@ -9,8 +9,9 @@ from django.http import JsonResponse
 def show_material(request, level, material_id):
     reading_material = ReadingMaterial.objects.get(id=material_id, difficulty=level)
     ids = ReadingMaterial.objects.filter(difficulty=level).values_list('id').order_by('order')
-    materials_passed = Progress.objects.filter(user_progress=request.user).values_list('passed_materials')
-    ids = [idx[0] for idx in ids if idx[0] not in list(materials_passed)]
+    materials_passed = Progress.objects.filter(user_progress=request.user)
+    materials_passed = set(material.id for material in materials_passed)
+    ids = [idx[0] for idx in ids if idx[0] not in materials_passed]
     return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids})
 
 
@@ -54,13 +55,16 @@ def get_profile(request):
                        'progress_advanced': progress_advanced, 'n_profile':profile, 'n_intermediate':intermediate, 'n_advanced': advanced})
 
 
+@login_required
 def proficiency_levels(request):
+    materials_passed = Progress.objects.filter(user_progress=request.user)
+    materials_passed = set(material.id for material in materials_passed.all())
     novice_ids = ReadingMaterial.objects.filter(difficulty='N').values_list('id').order_by('order')
-    novice_ids = [id[0] for id in novice_ids]
+    novice_ids = [id[0] for id in novice_ids if id[0] not in materials_passed]
     inter_ids = ReadingMaterial.objects.filter(difficulty='I').values_list('id').order_by('order')
-    inter_ids = [id[0] for id in inter_ids]
+    inter_ids = [id[0] for id in inter_ids if id[0] not in materials_passed]
     advanced_ids = ReadingMaterial.objects.filter(difficulty='A').values_list('id').order_by('order')
-    advanced_ids = [id[0] for id in advanced_ids]
+    advanced_ids = [id[0] for id in advanced_ids if id[0] not in materials_passed]
     init = []
     if novice_ids:
         init.append(novice_ids[0])
@@ -73,7 +77,8 @@ def proficiency_levels(request):
         init.append(0)
     if advanced_ids:
         init.append(advanced_ids[0])
-
+        print(advanced_ids)
+    print(init)
     return render(request, 'reading_materials/select_level.html', {'init': init})
 
 
@@ -82,21 +87,31 @@ def save_responses(request):
     if request.is_ajax() and request.method=='POST':
         answers =  request.POST.getlist("responses[]", None)
         material_id = request.POST.get("material_id", None)
-        feedback = {}
+        output=[]
         correct=0
         for ans in answers:
+            feedback = {}
             answer = Answer.objects.get(pk=ans)
             response = Responses.objects.create(answer=answer, user=request.user)
+            print(response.answer.correct)
             if response.answer.correct == True:
                 correct+=1
-                feedback['response'] = 1
+                feedback['result'] = 1
+                feedback['response'] = 'Your answer'+ans+'is correct'
                 feedback['question'] = answer.question.content
+                output.append(feedback)
             else:
-                feedback['response'] = 0
-                feedback['answer'] = answer.question.content
+                feedback['result'] = 0
+                feedback['response'] = 'Your answer'+ans+'is incorrect'
+                feedback['question'] = answer.question.content
+                output.append(feedback)
         if correct == len(answers):
-            progress=Progress.objects.create()
-            progress.user_progress.add(request.user)
-            progress.passed_materials.add(ReadingMaterial.objects.get(id=material_id))
-            print(feedback)
+            if not Progress.objects.get(user_progress=request.user):
+                progress=Progress.objects.create()
+                progress.user_progress.add(request.user)
+                progress.passed_materials.add(ReadingMaterial.objects.get(id=material_id))
+            else:
+                progress = Progress.objects.get(user_progress=request.user)
+                progress.passed_materials.add(ReadingMaterial.objects.get(id=material_id))
+        print(output)
         return JsonResponse(feedback, content_type='application/json')

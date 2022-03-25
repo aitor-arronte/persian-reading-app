@@ -22,5 +22,10 @@ class ReadingAdmin(admin.ModelAdmin):
     search_fields = ('title', )
 
 
+
+class UserProgress(admin.ModelAdmin):
+    filter_horizontal = ('passed_materials',)
+
 admin.site.register(ReadingMaterial, ReadingAdmin)
 admin.site.register(Profile)
+admin.site.register(Progress, UserProgress)

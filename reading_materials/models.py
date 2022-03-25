@@ -55,6 +55,9 @@ class ReadingMaterial(models.Model):
 
 
 class Progress(models.Model):
-  user_progress = models.ManyToManyField(User)
-  passed_materials = models.ManyToManyField(ReadingMaterial)
+  user_progress = models.ForeignKey(User, on_delete=models.CASCADE)
+  passed_materials = models.ManyToManyField(ReadingMaterial, blank=True)
   created = models.DateTimeField(default=datetime.datetime.now())
+
+  def __str__(self):
+	  return str(self.user_progress)
