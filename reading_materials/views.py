@@ -97,12 +97,14 @@ def save_responses(request):
             if response.answer.correct == True:
                 correct+=1
                 feedback['result'] = 1
-                feedback['response'] = 'Your answer is correct'
+                feedback['response'] = 'is correct'
+                feedback['answer'] = answer.content
                 feedback['question'] = answer.question.content
                 output.append(feedback)
             else:
                 feedback['result'] = 0
-                feedback['response'] = 'Your answer is incorrect'
+                feedback['response'] = 'is incorrect'
+                feedback['answer'] = answer.content
                 feedback['question'] = answer.question.content
                 output.append(feedback)
         if correct == len(answers):

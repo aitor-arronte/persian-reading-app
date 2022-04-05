@@ -111,6 +111,7 @@
       {% endfor %}
           <input type="submit" value="Check responses" id="check_responses">
 </form>
+          <div id="question-responses"></div>
             </div>
 
           <div class="tab-pane " id="video" >
@@ -134,7 +135,6 @@
     </section><!-- End Portfolio Details Section -->
 
   </main><!-- End #main -->
-
 {% endblock %}
 
 {% block js %}
@@ -157,14 +157,13 @@ $('#reading-material-form').on('submit', function(event){
 });
 
 
-
-
-          //Function that saves the form submission
+//Function that saves the form submission
 function save_responses(){
 var responses = [];
 $('input[type=radio]:checked').each(function () {
     responses.push($(this).attr('id'));
 })
+
     $('#reading-material-form input').attr('readonly', 'readonly');
      $.ajax({
             type: 'POST',
@@ -174,20 +173,29 @@ $('input[type=radio]:checked').each(function () {
         },
             data: {'responses': responses, 'material_id': {{ material.id }} },
             success: function (response) {
-            $('#card-content').hide();
+
             $('#check_responses').hide();
             $('#next').show(500);
-            console.log(response);
-                for (let i = 0; i < response.length; i++) {
 
-                    if (response[i][0] == 1) {
-                            $('#reading_content').prepend(
-                                '<p>Question:'+response[i][0]+' (Correct)</p>'
-                            )}
-                    else if (response[i][0] == 0){
-                            $('#reading_content').prepend(
-                                '<p>Question:'+response[i][0]+' (Incorrect)</p>'
-                            )}
+            $('#question-responses').append('<div class="card-header"><p>Results and Feedback</p></div><br>');
+
+                for (let i = 0; i < response.length; i++) {
+                    $('#question-responses').append(
+                                '<p>'+response[i]['question']+'</p>'
+                            )
+                    if(response[i]['result']==0){
+                        $('#question-responses').append(
+                            '<p>Your answer: '+response[i]['answer']+' <strong class="text-danger">'+response[i]['response']+'</strong></p>'
+                        )
+                    }
+
+                     else if(response[i]['result']==1){
+                        $('#question-responses').append(
+                             '<p>Your answer: '+response[i]['answer']+' <strong class="text-success">'+response[i]['response']+'</strong></p>'
+
+                        )
+                    }
+                    $('#question-responses').append('<hr>')
                     }
             },
             error: function (response) {
