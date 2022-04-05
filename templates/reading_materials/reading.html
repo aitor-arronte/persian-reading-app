@@ -109,7 +109,7 @@
               </div>
               {% endfor %}
       {% endfor %}
-          <input type="submit" value="Check responses">
+          <input type="submit" value="Check responses" id="check_responses">
 </form>
             </div>
 
@@ -175,6 +175,7 @@ $('input[type=radio]:checked').each(function () {
             data: {'responses': responses, 'material_id': {{ material.id }} },
             success: function (response) {
             $('#card-content').hide();
+            $('#check_responses').hide();
             $('#next').show(500);
             console.log(response);
                 for (let i = 0; i < response.length; i++) {

@@ -57,8 +57,8 @@ def get_profile(request):
 
 @login_required
 def proficiency_levels(request):
-    materials_passed = Progress.objects.filter(user_progress=request.user)
-    materials_passed = set(material.id for material in materials_passed.all())
+    materials_passed = Progress.objects.filter(user_progress=request.user).values('passed_materials')
+    materials_passed = set(material['passed_materials'] for material in materials_passed)
     novice_ids = ReadingMaterial.objects.filter(difficulty='N').values_list('id').order_by('order')
     novice_ids = [id[0] for id in novice_ids if id[0] not in materials_passed]
     inter_ids = ReadingMaterial.objects.filter(difficulty='I').values_list('id').order_by('order')
@@ -77,8 +77,8 @@ def proficiency_levels(request):
         init.append(0)
     if advanced_ids:
         init.append(advanced_ids[0])
-        print(advanced_ids)
-    print(init)
+    else:
+        init.append(0)
     return render(request, 'reading_materials/select_level.html', {'init': init})
 
 
@@ -87,31 +87,29 @@ def save_responses(request):
     if request.is_ajax() and request.method=='POST':
         answers =  request.POST.getlist("responses[]", None)
         material_id = request.POST.get("material_id", None)
+        user = User.objects.get(username=request.user)
         output=[]
         correct=0
         for ans in answers:
             feedback = {}
             answer = Answer.objects.get(pk=ans)
             response = Responses.objects.create(answer=answer, user=request.user)
-            print(response.answer.correct)
             if response.answer.correct == True:
                 correct+=1
                 feedback['result'] = 1
-                feedback['response'] = 'Your answer'+ans+'is correct'
+                feedback['response'] = 'Your answer is correct'
                 feedback['question'] = answer.question.content
                 output.append(feedback)
             else:
                 feedback['result'] = 0
-                feedback['response'] = 'Your answer'+ans+'is incorrect'
+                feedback['response'] = 'Your answer is incorrect'
                 feedback['question'] = answer.question.content
                 output.append(feedback)
         if correct == len(answers):
-            if not Progress.objects.get(user_progress=request.user):
-                progress=Progress.objects.create()
-                progress.user_progress.add(request.user)
+            if not Progress.objects.filter(user_progress=user).exists():
+                progress=Progress.objects.create(user_progress=user)
                 progress.passed_materials.add(ReadingMaterial.objects.get(id=material_id))
             else:
-                progress = Progress.objects.get(user_progress=request.user)
+                progress = Progress.objects.get(user_progress=user)
                 progress.passed_materials.add(ReadingMaterial.objects.get(id=material_id))
-        print(output)
-        return JsonResponse(feedback, content_type='application/json')
+        return JsonResponse(output, content_type='application/json', safe=False)
