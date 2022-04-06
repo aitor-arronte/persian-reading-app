@@ -51,8 +51,39 @@
   <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_advanced }}%" aria-valuenow="{{ progress_advanced }}" aria-valuemin="0" aria-valuemax="100"></div>
 
 </div>
-{% else %}
+{% elif profile.type == 'I' %}
 
+
+             <table class="table ">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <th scope="col">Proficiency Level</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      {% for novice in progress_novice %}
+      <td>{{ novice.user_progress }}</td>
+      <td>Novice</td>
+       {% endfor %}
+    </tr>
+    <tr>
+      {% for intermediate in progress_intermediate %}
+      <td>{{ intermediate.user_progress }}</td>
+      <td>Intermediate</td>
+       {% endfor %}
+    </tr>
+    <tr>
+      {% for advanced in progress_advanced %}
+      <td>{{ advanced.user_progress }}</td>
+      <td>Advanced</td>
+       {% endfor %}
+    </tr>
+  </tbody>
+
+</table>
 
 {% endif %}
 
