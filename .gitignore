@@ -10,3 +10,5 @@ settings.py
 *.jpg
 *.png
 *.DS_Store
+creds/
+data/
