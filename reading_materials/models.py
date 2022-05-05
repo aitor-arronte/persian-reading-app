@@ -54,6 +54,13 @@ class ReadingMaterial(models.Model):
 		return str(self.title)
 
 
+class WordDictionary(models.Model):
+	material = models.ForeignKey(ReadingMaterial, on_delete=models.CASCADE)
+	dictionary = models.TextField()
+	def __str__(self):
+		return str(self.material.id)
+
+
 class Progress(models.Model):
   user_progress = models.ForeignKey(User, on_delete=models.CASCADE)
   passed_materials = models.ManyToManyField(ReadingMaterial, blank=True)
