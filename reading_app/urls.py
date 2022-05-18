@@ -16,7 +16,8 @@ urlpatterns = [
 		path('proficiency/', proficiency_levels),
 		path('reading/', TemplateView.as_view(template_name='reading_materials/reading_material-2.html')),
 		path('profile/', get_profile),
-		path('save_responses', save_responses, name='save_responses')
+		path('save_responses', save_responses, name='save_responses'),
+		path('create_entries', get_stems)
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

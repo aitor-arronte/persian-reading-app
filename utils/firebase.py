@@ -5,7 +5,7 @@ import json
 cred = credentials.Certificate('creds/serviceKey.json')
 firebase_admin.initialize_app(cred)
 
-if __name__ == 'main':
+if __name__ == '__main__':
 	db = firestore.client()
 	collection = db.collection('words')
 	docs = collection.get()

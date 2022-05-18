@@ -28,4 +28,5 @@ class UserProgress(admin.ModelAdmin):
 
 admin.site.register(ReadingMaterial, ReadingAdmin)
 admin.site.register(Profile)
+admin.site.register(WordDictionary)
 admin.site.register(Progress, UserProgress)
