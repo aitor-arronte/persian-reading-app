@@ -71,7 +71,7 @@
           <br>
           {% endif %}
 
-              {{ material.text|safe }}
+              {{ html|safe }}
 
            {% if material.pdf %}
               <br>
@@ -159,7 +159,7 @@ $('#reading-material-form').on('submit', function(event){
 
 //Function that saves the form submission
 function save_responses(){
-var words = {{ words.dictionary|safe }};
+
 var responses = [];
 
 

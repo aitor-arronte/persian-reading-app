@@ -16,17 +16,25 @@ stemmer = FindStems()
 word_list = open('data/words.json', 'r')
 word_list = json.load(word_list)
 parser = argparse.ArgumentParser()
+base_url = 'https://persian-dictionary-3eb04.firebaseapp.com/details/'
 
 
 @login_required
 def show_material(request, level, material_id):
     reading_material = ReadingMaterial.objects.get(id=material_id, difficulty=level)
     words = WordDictionary.objects.get(material=reading_material)
+    html = reading_material.text
+    wordList = words.dictionary.replace("'", '"')
+    wordList = json.loads(wordList)
+    for word in wordList:
+        if ' '+word['word']+' ' in html:
+            html = html.replace(' '+word['word']+' ', ' <a href="'+base_url+word['id']+'"target="_blank">'+word['word']+'</a> ')
+    print(html)
     ids = ReadingMaterial.objects.filter(difficulty=level).values_list('id').order_by('order')
     materials_passed = Progress.objects.filter(user_progress=request.user)
     materials_passed = set(material.id for material in materials_passed)
     ids = [idx[0] for idx in ids if idx[0] not in materials_passed]
-    return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids, 'words': words})
+    return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids, 'html': html})
 
 
 @login_required
@@ -146,8 +154,8 @@ def create_entries(request):
                 stem = stemmer.convert_to_stem(word)
                 for w in word_list:
                     if stem == w['word']:
-                        if {'word':word, 'stem': w['word'], 'id': w['id']} not in wdict:
-                            wdict.append({'word':word, 'stem': w['word'], 'id': w['id']})
+                        if {"word":word, 'stem': str(w['word']), "id": str(w['id'])} not in wdict:
+                            wdict.append({"word":word, 'stem': str(w['word']), "id": str(w['id'])})
             word_dictionary.append(WordDictionary(material=material_object, dictionary=wdict))
     try:
         if len(wdict) >0:
