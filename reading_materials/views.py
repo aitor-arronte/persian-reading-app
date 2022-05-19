@@ -8,13 +8,12 @@ from reading_materials.models import ReadingMaterial, WordDictionary
 from django.utils.html import strip_tags
 import json
 import argparse
+from reading_app import settings
 
 
 normalizer = Normalizer()
 tokenizer = Tokenizer()
 stemmer = FindStems()
-word_list = open('./data/words.json', 'r')
-word_list = json.load(word_list)
 parser = argparse.ArgumentParser()
 base_url = 'https://persian-dictionary-3eb04.firebaseapp.com/details/'
 
@@ -141,6 +140,8 @@ def save_responses(request):
 
 @login_required
 def create_entries(request):
+    word_list = open(settings.DICTIONARY_FILE, 'r', encoding="utf-8")
+    word_list = json.load(word_list)
     existing = WordDictionary.objects.all().values('material')
     existing = [e['material'] for e in existing]
     word_dictionary=[]
