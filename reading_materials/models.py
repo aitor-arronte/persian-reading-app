@@ -55,7 +55,7 @@ class ReadingMaterial(models.Model):
 
 
 class WordDictionary(models.Model):
-	material = models.ForeignKey(ReadingMaterial, on_delete=models.CASCADE)
+	material = models.ForeignKey(ReadingMaterial,unique=True, on_delete=models.CASCADE)
 	dictionary = models.TextField()
 	def __str__(self):
 		return str(self.material.id)

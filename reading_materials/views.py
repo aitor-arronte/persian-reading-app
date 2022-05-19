@@ -21,11 +21,12 @@ parser = argparse.ArgumentParser()
 @login_required
 def show_material(request, level, material_id):
     reading_material = ReadingMaterial.objects.get(id=material_id, difficulty=level)
+    words = WordDictionary.objects.get(material=reading_material)
     ids = ReadingMaterial.objects.filter(difficulty=level).values_list('id').order_by('order')
     materials_passed = Progress.objects.filter(user_progress=request.user)
     materials_passed = set(material.id for material in materials_passed)
     ids = [idx[0] for idx in ids if idx[0] not in materials_passed]
-    return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids})
+    return render(request, 'reading_materials/reading.html', {'material': reading_material, 'ids': ids, 'words': words})
 
 
 @login_required
@@ -131,24 +132,28 @@ def save_responses(request):
 
 
 @login_required
-def get_stems(request, id_last=None):
+def create_entries(request):
+    existing = WordDictionary.objects.all().values('material')
+    existing = [e['material'] for e in existing]
     word_dictionary=[]
-    if id_last:
-        materials = ReadingMaterial.objects.filter(id > id_last)
-    else:
-        materials = ReadingMaterial.objects.all()
+    materials = ReadingMaterial.objects.all()
     for material in materials:
-        wdict=[]
-        words = tokenizer.tokenize_words(normalizer.normalize(strip_tags(material)))
-        material_object = ReadingMaterial.objects.get(id=material.id)
-        for word in words:
-            stem = stemmer.convert_to_stem(word)
-            for w in word_list:
-                if stem == w['word']:
-                    wdict.append({'word':word, 'stem': w['word'], 'id': w['id']})
-        word_dictionary.append(WordDictionary(material=material_object, dictionary=wdict))
+        if material.id not in existing:
+            wdict=[]
+            words = tokenizer.tokenize_words(normalizer.normalize(strip_tags(material.text)))
+            material_object = ReadingMaterial.objects.get(id=material.id)
+            for word in words:
+                stem = stemmer.convert_to_stem(word)
+                for w in word_list:
+                    if stem == w['word']:
+                        if {'word':word, 'stem': w['word'], 'id': w['id']} not in wdict:
+                            wdict.append({'word':word, 'stem': w['word'], 'id': w['id']})
+            word_dictionary.append(WordDictionary(material=material_object, dictionary=wdict))
     try:
-        WordDictionary.objects.bulk_create(word_dictionary)
-        return HttpResponse("Created stem for dictionary")
+        if len(wdict) >0:
+            WordDictionary.objects.bulk_create(word_dictionary)
+            return HttpResponse("Created stem for dictionary.")
+        else:
+            return HttpResponse("No entries added.")
     except:
         return HttpResponse("There has been an error with stemming.")

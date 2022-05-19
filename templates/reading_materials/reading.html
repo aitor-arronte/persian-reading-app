@@ -159,7 +159,11 @@ $('#reading-material-form').on('submit', function(event){
 
 //Function that saves the form submission
 function save_responses(){
+var words = {{ words.dictionary|safe }};
 var responses = [];
+
+
+
 $('input[type=radio]:checked').each(function () {
     responses.push($(this).attr('id'));
 })
