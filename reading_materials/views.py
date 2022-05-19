@@ -13,7 +13,7 @@ import argparse
 normalizer = Normalizer()
 tokenizer = Tokenizer()
 stemmer = FindStems()
-word_list = open('data/words.json', 'r')
+word_list = open('./data/words.json', 'r')
 word_list = json.load(word_list)
 parser = argparse.ArgumentParser()
 base_url = 'https://persian-dictionary-3eb04.firebaseapp.com/details/'
